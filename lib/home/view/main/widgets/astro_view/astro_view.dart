@@ -1,13 +1,13 @@
+import 'package:emo_task/home/view_model/astro/astro_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:emo_task/home/models/forecast_model.dart';
-import 'package:emo_task/core/assets_manager.dart';
 import 'package:emo_task/core/font_manager.dart';
 import 'package:emo_task/core/styles_manager.dart';
 import 'package:emo_task/core/values_manager.dart';
 
 class AstroView extends StatelessWidget {
-  final AstroModel astroModel;
-  const AstroView({Key? key, required this.astroModel}) : super(key: key);
+  final AstroViewModel viewModel;
+
+  const AstroView({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,15 @@ class AstroView extends StatelessWidget {
       child: Row(
         children: [
           AstroViewComponent(
-            date: astroModel.sunrise!,
-            state: true, //if sunrise
+            date: viewModel.sunrise,
+            title: viewModel.getTitle(true),
+            image: viewModel.getSunImage(true),
           ),
           Spacer(),
           AstroViewComponent(
-            date: astroModel.sunset!,
-            state: false,
+            date: viewModel.sunset,
+            title: viewModel.getTitle(false),
+            image: viewModel.getSunImage(false),
           ),
         ],
       ),
@@ -30,14 +32,17 @@ class AstroView extends StatelessWidget {
   }
 }
 
+
 class AstroViewComponent extends StatelessWidget {
   final String date;
-  final bool state;
+  final String title;
+  final String image;
 
   const AstroViewComponent({
     Key? key,
     required this.date,
-    required this.state,
+    required this.title,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -45,20 +50,18 @@ class AstroViewComponent extends StatelessWidget {
     return Column(
       children: [
         Text(
-          state ? "Sunrise" : "Sunset",
+          title,
           style: getRegularStyle(fontSize: FontSize.s14),
         ),
-        SizedBox(
-          height: 3,
-        ),
+        SizedBox(height: 3),
         Text(
           date,
           style: getSemiBoldStyle(color: Colors.white, fontSize: FontSize.s14),
         ),
         Image.asset(
-          state ? ImageAssets.sunrise : ImageAssets.sunsunset,
+          image,
           height: AppSize.s120,
-        )
+        ),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:emo_task/home/view_model/astro/astro_view_model.dart';
 import 'package:emo_task/home/view_model/day_forecast_view_model/day_forecast_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,14 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               CustomItem(
                                   isLight: isLight,
                                   child: AstroView(
-                                    astroModel: AstroModel(
+                                      viewModel: AstroViewModel(
+                                    AstroModel(
                                         moonPhase: weatherData!
                                             .forecastedDays![0].astro.moonPhase,
                                         sunrise: weatherData!
                                             .forecastedDays![0].astro.sunrise,
                                         sunset: weatherData!
                                             .forecastedDays![0].astro.sunset),
-                                  )),
+                                  ))),
                               CustomItem(
                                   isLight: isLight,
                                   child: WeatherExtraWidget(
