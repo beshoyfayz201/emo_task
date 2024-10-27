@@ -43,7 +43,7 @@ class WeatherCubit extends Cubit<WeatherState> {
       emit(WeatherGetDataSuccess());
     }).catchError((e) {
       print(e);
-      emit(WeatherGetDataError());
+      emit(WeatherGetDataError('ops there is an error'));
     });
   }
 
@@ -83,11 +83,11 @@ class WeatherCubit extends Cubit<WeatherState> {
     }).then((value) {
       weatherData = WeatherDataModel.fromMap(value.data);
       AddAnotherLocation(city, weatherData!.current!.temp_c);
-      print("---------------" + weatherData!.location!.country);
+      print("---------------${weatherData!.location!.country}");
       emit(WeatherGetDataSuccess());
     }).catchError((e) {
       print(e);
-      emit(WeatherGetDataError());
+      emit(WeatherGetDataError('ops there is an error'));
     });
   }
 

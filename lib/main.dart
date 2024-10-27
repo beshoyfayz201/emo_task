@@ -7,7 +7,7 @@ import 'package:emo_task/core/routes_manager.dart';
 import 'package:emo_task/core/theme_manager.dart';
 
 void main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper();
   await CashHelper.initCashHelper();
   final List<String> mylocations = CashHelper.getData("locations") ?? const [];
@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
   final List<String>? locations;
   final List<String>? temps;
 
-  const MyApp({Key? key, required this.locations, required this.temps})
-      : super(key: key);
+  const MyApp({super.key, required this.locations, required this.temps});
 
   // This widget is the root of your application.
   @override
@@ -33,7 +32,8 @@ class MyApp extends StatelessWidget {
       create: (context) =>
           WeatherCubit(locations: locations!, temps: temps!)..getData(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Emo_Task',
+        debugShowCheckedModeBanner: false,
         onGenerateRoute: RouteGenerator.getRoute,
         theme: getApplicationTheme(),
       ),

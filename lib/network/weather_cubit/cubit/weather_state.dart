@@ -9,7 +9,10 @@ class WeatherGetDataSuccess extends WeatherState {}
 
 class WeatherDataLoading extends WeatherState {}
 
-class WeatherGetDataError extends WeatherState {}
+class WeatherGetDataError extends WeatherState {
+  final String error;
+  WeatherGetDataError(this.error);
+}
 
 class IsLightStateChanged extends WeatherState{}
 class WeatherCityChanged extends WeatherState {}

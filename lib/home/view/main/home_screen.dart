@@ -53,94 +53,104 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-        if (state is WeatherGetDataSuccess) {
-          weatherData = WeatherCubit.get(context).weatherData;
-        }
-      },
-      builder: (context, state) {
-        return (state is WeatherDataLoading || state is WeatherGetDataError)
-            ? CustomItem(
-                isLight: true,
-                child: Center(
-                  child: Image.asset(
-                    "assets/images/sun.gif",
-                    height: 150,
-                  ),
-                ),
-              )
-            : Scaffold(
-                extendBodyBehindAppBar: true,
-                body: backGround_layout(
-                  isLight: isLight,
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    shrinkWrap: false,
-                    slivers: <Widget>[
-                      CustomSliverAppBar(
-                          isCollapsed: _appBarCollapsed,
-                          isLight: isLight,
-                          day: DateFormat('E').format(DateTime.now()),
-                          feelsLike:
-                              weatherData!.current!.feelslike_c.toString(),
-                          maxTemp: weatherData!.forecastedDays![0].max,
-                          minTemp: weatherData!.forecastedDays![0].min,
-                          place: weatherData!.location!.region,
-                          temp: weatherData!.current!.temp_c.ceil().toString(),
-                          time: DateFormat("h:mm a").format(DateTime.now())),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              CustomItem(
-                                isLight: isLight,
-                                child: HourlyMainWidget(
-                                    hours:
-                                        weatherData!.forecastedDays![0].hours),
-                              ),
-                              CustomItem(
-                                isLight: isLight,
-                                child: TextForecast(
-                                    forecastText: weatherData!
-                                        .current!.condition.conditionText),
-                              ),
-                              CustomItem(
-                                  isLight: isLight,
-                                  child: DaysForecast(
-                                    viewModel: DaysForecastViewModel(
-                                        days: weatherData!.forecastedDays!,
-                                        isLight: isLight),
-                                  )),
-                              CustomItem(
-                                  isLight: isLight,
-                                  child: AstroView(
-                                      viewModel: AstroViewModel(
-                                    AstroModel(
-                                        moonPhase: weatherData!
-                                            .forecastedDays![0].astro.moonPhase,
-                                        sunrise: weatherData!
-                                            .forecastedDays![0].astro.sunrise,
-                                        sunset: weatherData!
-                                            .forecastedDays![0].astro.sunset),
-                                  ))),
-                              CustomItem(
-                                  isLight: isLight,
-                                  child: WeatherExtraWidget(
-                                    humidty: weatherData!.current!.humidty,
-                                    uvIndex: weatherData!.current!.uvIndex,
-                                    wind: weatherData!.current!.wind,
-                                  )),
-                            ],
-                          ),
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        body: BlocConsumer<WeatherCubit, WeatherState>(
+          listener: (context, state) {
+            if (state is WeatherGetDataSuccess) {
+              weatherData = WeatherCubit.get(context).weatherData;
+            } else if (state is WeatherGetDataError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+              ));
+            }
+          },
+          builder: (context, state) {
+            return (state is WeatherDataLoading || state is WeatherGetDataError)
+                ? GestureDetector(
+                    onTap: () {
+                      BlocProvider.of<WeatherCubit>(context).getData();
+                    },
+                    child: CustomItem(
+                      isLight: true,
+                      child: Center(
+                        child: Image.asset(
+                          "assets/images/sun.gif",
+                          height: 150,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-      },
-    );
+                      ),
+                    ),
+                  )
+                : backGround_layout(
+                    isLight: isLight,
+                    child: CustomScrollView(
+                      controller: scrollController,
+                      shrinkWrap: false,
+                      slivers: <Widget>[
+                        CustomSliverAppBar(
+                            isCollapsed: _appBarCollapsed,
+                            isLight: isLight,
+                            day: DateFormat('E').format(DateTime.now()),
+                            feelsLike:
+                                weatherData!.current!.feelslike_c.toString(),
+                            maxTemp: weatherData!.forecastedDays![0].max,
+                            minTemp: weatherData!.forecastedDays![0].min,
+                            place: weatherData!.location!.region,
+                            temp:
+                                weatherData!.current!.temp_c.ceil().toString(),
+                            time: DateFormat("h:mm a").format(DateTime.now())),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                CustomItem(
+                                  isLight: isLight,
+                                  child: HourlyMainWidget(
+                                      hours: weatherData!
+                                          .forecastedDays![0].hours),
+                                ),
+                                CustomItem(
+                                  isLight: isLight,
+                                  child: TextForecast(
+                                      forecastText: weatherData!
+                                          .current!.condition.conditionText),
+                                ),
+                                CustomItem(
+                                    isLight: isLight,
+                                    child: DaysForecast(
+                                      viewModel: DaysForecastViewModel(
+                                          days: weatherData!.forecastedDays!,
+                                          isLight: isLight),
+                                    )),
+                                CustomItem(
+                                    isLight: isLight,
+                                    child: AstroView(
+                                        viewModel: AstroViewModel(
+                                      AstroModel(
+                                          moonPhase: weatherData!
+                                              .forecastedDays![0]
+                                              .astro
+                                              .moonPhase,
+                                          sunrise: weatherData!
+                                              .forecastedDays![0].astro.sunrise,
+                                          sunset: weatherData!
+                                              .forecastedDays![0].astro.sunset),
+                                    ))),
+                                CustomItem(
+                                    isLight: isLight,
+                                    child: WeatherExtraWidget(
+                                      humidty: weatherData!.current!.humidty,
+                                      uvIndex: weatherData!.current!.uvIndex,
+                                      wind: weatherData!.current!.wind,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ));
+          },
+        ));
   }
 }
