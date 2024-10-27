@@ -7,7 +7,7 @@ import 'package:emo_task/core/values_manager.dart';
 class AstroView extends StatelessWidget {
   final AstroViewModel viewModel;
 
-  const AstroView({Key? key, required this.viewModel}) : super(key: key);
+  const AstroView({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class AstroView extends StatelessWidget {
             title: viewModel.getTitle(true),
             image: viewModel.getSunImage(true),
           ),
-          Spacer(),
+          const Spacer(),
           AstroViewComponent(
             date: viewModel.sunset,
             title: viewModel.getTitle(false),
@@ -32,18 +32,17 @@ class AstroView extends StatelessWidget {
   }
 }
 
-
 class AstroViewComponent extends StatelessWidget {
   final String date;
   final String title;
   final String image;
 
   const AstroViewComponent({
-    Key? key,
+    super.key,
     required this.date,
     required this.title,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class AstroViewComponent extends StatelessWidget {
           title,
           style: getRegularStyle(fontSize: FontSize.s14),
         ),
-        SizedBox(height: 3),
+        const SizedBox(height: 3),
         Text(
           date,
           style: getSemiBoldStyle(color: Colors.white, fontSize: FontSize.s14),

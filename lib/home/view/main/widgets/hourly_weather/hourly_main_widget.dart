@@ -8,7 +8,7 @@ import 'hourly_temp.dart';
 
 class HourlyMainWidget extends StatelessWidget {
   final List<Hour> hours;
-  const HourlyMainWidget({Key? key, required this.hours}) : super(key: key);
+  const HourlyMainWidget({super.key, required this.hours});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,9 @@ class HourlyMainWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Column(
             children: [
-              HourlyTempRow(hourlyTempRowViewModel: HourlyTempRowViewModel(hours)),
-              SizedBox(
+              HourlyTempRow(
+                  hourlyTempRowViewModel: HourlyTempRowViewModel(hours)),
+              const SizedBox(
                 height: 100,
               ),
               //   ),

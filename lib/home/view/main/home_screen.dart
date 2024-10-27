@@ -8,7 +8,6 @@ import 'package:emo_task/home/models/weather_data_model.dart';
 import 'package:emo_task/network/weather_cubit/cubit/weather_cubit.dart';
 import 'package:emo_task/home/view/main/appbar_widgets/sliver_app_bar.dart';
 import 'package:emo_task/home/view/main/widgets/astro_view/astro_view.dart';
-
 import 'package:emo_task/home/view/main/widgets/background_layout.dart';
 import 'package:emo_task/home/view/main/widgets/days_forecast_widget/days_forecast_widget.dart';
 import 'package:emo_task/home/view/main/widgets/hourly_weather/hourly_main_widget.dart';
@@ -17,7 +16,7 @@ import 'package:emo_task/home/view/main/widgets/textforecast/text_forecast.dart'
 import 'package:emo_task/home/view/main/widgets/weather_extra_widget/weather_extra_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -72,16 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocProvider.of<WeatherCubit>(context).getData();
                     },
                     child: CustomItem(
-                      isLight: true,
-                      child: Center(
-                        child: Image.asset(
-                          "assets/images/sun.gif",
-                          height: 150,
-                        ),
-                      ),
-                    ),
-                  )
-                : backGround_layout(
+                        isLight: true,
+                        child: Center(
+                            child: Image.asset("assets/images/sun.gif",
+                                height: 150))))
+                : BackGroundLayout(
                     isLight: isLight,
                     child: CustomScrollView(
                       controller: scrollController,

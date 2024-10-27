@@ -7,11 +7,10 @@ import 'package:emo_task/core/values_manager.dart';
 class WeatherExtraWidget extends StatelessWidget {
   final String uvIndex, wind, humidty;
   const WeatherExtraWidget(
-      {Key? key,
+      {super.key,
       required this.humidty,
       required this.uvIndex,
-      required this.wind})
-      : super(key: key);
+      required this.wind});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +23,16 @@ class WeatherExtraWidget extends StatelessWidget {
             name: "UV Index",
             value: double.parse(uvIndex) > 3 ? "High" : "Low",
           ),
-          VerticalDivider(
+          const VerticalDivider(
             color: Colors.grey,
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           WeatherExtraComponent(
             image: ImageAssets.wind,
             name: "Wind",
             value: "$wind km/h",
           ),
-          VerticalDivider(
+          const VerticalDivider(
             color: Colors.grey,
           ),
           WeatherExtraComponent(
@@ -50,8 +49,10 @@ class WeatherExtraWidget extends StatelessWidget {
 class WeatherExtraComponent extends StatelessWidget {
   final String image, name, value;
   const WeatherExtraComponent(
-      {Key? key, required this.image, required this.name, required this.value})
-      : super(key: key);
+      {super.key,
+      required this.image,
+      required this.name,
+      required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +65,14 @@ class WeatherExtraComponent extends StatelessWidget {
             image,
             height: AppSize.s40,
           ),
-          SizedBox(
+          const SizedBox(
             height: AppSize.s8,
           ),
           Text(
             name,
             style: getBoldStyle(color: Colors.white, fontSize: FontSize.s14),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(

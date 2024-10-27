@@ -11,7 +11,7 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.homeRoute:
         return MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => const HomeScreen(),
         );
 
       default:

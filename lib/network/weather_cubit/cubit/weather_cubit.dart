@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emo_task/app/helpers/cash_helper.dart';
@@ -42,7 +43,6 @@ class WeatherCubit extends Cubit<WeatherState> {
       weatherData = WeatherDataModel.fromMap(value.data);
       emit(WeatherGetDataSuccess());
     }).catchError((e) {
-      print(e);
       emit(WeatherGetDataError('ops there is an error'));
     });
   }
@@ -83,10 +83,8 @@ class WeatherCubit extends Cubit<WeatherState> {
     }).then((value) {
       weatherData = WeatherDataModel.fromMap(value.data);
       AddAnotherLocation(city, weatherData!.current!.temp_c);
-      print("---------------${weatherData!.location!.country}");
       emit(WeatherGetDataSuccess());
     }).catchError((e) {
-      print(e);
       emit(WeatherGetDataError('ops there is an error'));
     });
   }

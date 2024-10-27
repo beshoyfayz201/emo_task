@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class CurrentWeatherModel {
   late final double temp_c, feelslike_c;
   late final String uvIndex, wind, humidty;
